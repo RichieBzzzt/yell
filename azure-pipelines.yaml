@@ -1,0 +1,54 @@
+
+trigger:
+  - master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+name: $(BuildDefinitionName)_$(VersionNumber)_$(SourceBranchName)
+
+variables:
+  - name: BaseVersionNumber 
+    value: "0.2"  
+  - name: Minor 
+    value: $[counter(variables['BaseVersionNumber'], 1)]
+  - name: VersionNumber 
+    value: $(BaseVersionNumber).$(Minor)
+  
+steps:
+  - task: PowerShell@2
+    displayName: "Update Build Number"
+    inputs:
+      targetType: 'inline'
+      script: |
+          $BuildName = $env:BUILD_DEFINITIONNAME +'_'+$env:VERSIONNUMBER +'_'+ $env:BUILD_SOURCEBRANCHNAME 
+          Write-Host "##vso[build.updatebuildnumber]$BuildName"
+
+  - task: Bash@3
+    displayName: "Package and Publish VS Code Theme"
+    inputs:
+      targetType: 'inline'
+      script: |
+        npm install -g npm@8.10.0
+        echo $PAT
+        git config user.email "richie@bzzzt.io"
+        git config user.name "RichieBzzzt"
+        sudo npm install -g vsce
+        vsce package
+        vsce publish $(VersionNumber) -p $PAT
+      failOnStderr: false
+      workingDirectory: $(System.DefaultWorkingDirectory)
+    env:
+      PAT: $(POSTMAN)
+
+  - task: CopyFiles@2
+    displayName: "Copy Files to: $(build.artifactstagingdirectory)"
+    inputs:
+      Contents: |
+        **
+      TargetFolder: "$(build.artifactstagingdirectory)"
+  
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact: yell"
+    inputs:
+      ArtifactName: yell
