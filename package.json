@@ -1,7 +1,7 @@
 {
-    "name": "yell",
-    "displayName": "yell",
-    "description": "team yell",
+    "name": "piers",
+    "displayName": "piers",
+    "description": "team piers",
     "publisher": "richiebzzzt",
     "icon": "images/icon.png",
     "version": "0.0.1",
@@ -14,7 +14,7 @@
     "contributes": {
         "themes": [
             {
-                "label": "yell",
+                "label": "piers",
                 "uiTheme": "vs-dark",
                 "path": "./themes/yell-color-theme.json"
             }
