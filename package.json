@@ -2,6 +2,8 @@
     "name": "yell",
     "displayName": "yell",
     "description": "team yell",
+    "publisher": "richiebzzzt",
+    "icon": "images/icon.png",
     "version": "0.0.1",
     "engines": {
         "vscode": "^1.69.0"
