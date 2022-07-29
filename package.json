@@ -1,0 +1,21 @@
+{
+    "name": "yell",
+    "displayName": "yell",
+    "description": "team yell",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.69.0"
+    },
+    "categories": [
+        "Themes"
+    ],
+    "contributes": {
+        "themes": [
+            {
+                "label": "yell",
+                "uiTheme": "vs-dark",
+                "path": "./themes/yell-color-theme.json"
+            }
+        ]
+    }
+}
